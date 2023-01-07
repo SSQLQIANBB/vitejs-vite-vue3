@@ -1,12 +1,16 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { resolve } from 'path'
 
 import legacy from '@vitejs/plugin-legacy'
+// import { splitVendorChunkPlugin } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/basic', // 命令行参数指定 vite build --base=/my/public/path/
   plugins: [
     vue(), 
+    // splitVendorChunkPlugin(), // 代码分割
     {
       // rollup插件执行时机
       ...legacy({
@@ -23,9 +27,42 @@ export default defineConfig({
     include: ['linked-dep'],
   },
   build: {
+    // 库模式 lib
+    // lib: {
+    //   // Could also be a dictionary or array of multiple entry points
+    //   entry: resolve(__dirname, 'lib/main.js'),
+    //   name: 'MyLib',
+    //   // the proper extensions will be added
+    //   fileName: 'my-lib',
+    // },
+    // rollupOptions: {
+    //   // 确保外部化处理那些你不想打包进库的依赖
+    //   external: ['vue'],
+    //   output: {
+    //     // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+    //     globals: {
+    //       vue: 'Vue',
+    //     },
+    //   },
+    // },
+    watch: {}, // vite build --watch 来启用 rollup 的监听器
+    // 当启用 --watch 标志时，
+    // 对 vite.config.js 的改动，以及任何要打包的文件，都将触发重新构建。
+    target: 'modules',
     commonjsOptions: {
       include: [/linked-dep/, /node_modules/],
     },
+    rollupOptions: {
+      // 多页面模式
+      // input: {
+      //   main: resolve(__dirname, 'index.html'),
+      //   nested: resolve(__dirname, 'nested/index.html'),
+      // },
+      output: {
+        // manualChunks: 自定义分割策略 
+        // 从 Vite 2.9 起，manualChunks 默认情况下不再被更改
+      },
+    }, // 修改rollup底层配置
   },
   /**
    * optimizeDeps.include 或 optimizeDeps.exclude 的一个典型使用场景，是当 Vite 在源码* 中无法直接发现 import 的时候。例如，import 可能是插件转换的结果。这意味着 Vite 无法在初* 始扫描时发现 import —— 只能在文件被浏览器请求并转换后才能发现。这将导致服务器在启动后立即* 重新打包。

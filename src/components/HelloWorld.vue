@@ -4,6 +4,8 @@ import { ref } from 'vue'
 defineProps<{ msg: string }>()
 
 const count = ref(0)
+
+console.log('hello-url', import.meta.url)
 </script>
 
 <template>
