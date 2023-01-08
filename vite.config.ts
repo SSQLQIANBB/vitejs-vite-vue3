@@ -1,13 +1,13 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
+// import { resolve } from 'path';
 
 import legacy from '@vitejs/plugin-legacy'
 // import { splitVendorChunkPlugin } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/basic/', // 命令行参数指定 vite build --base=/my/public/path/
+  base: '/', // 命令行参数指定 vite build --base=/my/public/path/
   plugins: [
     vue(), 
     // splitVendorChunkPlugin(), // 代码分割

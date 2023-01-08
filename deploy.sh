@@ -4,8 +4,6 @@
 set -e
 
 # 构建
-npm i
-
 npm run build
 
 # 进入构建文件夹
@@ -23,7 +21,7 @@ git add -A
 git commit -m 'deploy'
 
 # 如果你要部署在 https://<USERNAME>.github.io
-# git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git main
+git push -f git@github.com:SSQLQIANBB/SSQLQIANBB.github.io.git main
 
 # 如果你要部署在 https://<USERNAME>.github.io/<REPO>
 # git push -f git@github.com:SSQLQIANBB/basic.git main:gh-pages

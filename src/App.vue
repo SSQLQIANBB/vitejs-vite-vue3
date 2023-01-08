@@ -2,7 +2,7 @@
 import HelloWorld from './components/HelloWorld.vue'
 import ImgRaw from '/vite.svg?raw' // 文件
 import Img from '/vite.svg?url' // url
-import inline from './styles/inline.module.css?inline'; // 禁用css
+import inline from './styles/inline.module.css'; // 禁用css
 
 console.log('url-IMG', Img)
 
@@ -38,25 +38,25 @@ console.log(jsModules);
 /**
  * Reflect
  */
-let user = {
-  _name: "Guest",
-  get name() {
-    return this._name;
-  }
-};
+// let user = {
+//   _name: "Guest",
+//   get name() {
+//     return this._name;
+//   }
+// };
 
-let userProxy = new Proxy(user, {
-  get(target, prop, receiver) {
-    // console.log(target)
-    return target[prop] // (*) target = user
-  }
-});
+// let userProxy = new Proxy(user, {
+//   get(target, prop, receiver) {
+//     // console.log(target)
+//     return target[prop] // (*) target = user
+//   }
+// });
 
-let admin = {
-  __proto__: userProxy,
-  _name: "Admin"
-};
-console.log('name', admin.name)
+// let admin = {
+//   __proto__: userProxy,
+//   _name: "Admin"
+// };
+// console.log('name', admin.name)
 
 </script>
 
