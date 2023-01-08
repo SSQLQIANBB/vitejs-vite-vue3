@@ -7,7 +7,7 @@ import legacy from '@vitejs/plugin-legacy'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/basic/', // 命令行参数指定 vite build --base=/my/public/path/
+  base: '/vitejs-vite-vue3/', // 命令行参数指定 vite build --base=/my/public/path/
   plugins: [
     vue(), 
     // splitVendorChunkPlugin(), // 代码分割
