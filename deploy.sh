@@ -4,6 +4,8 @@
 set -e
 
 # 构建
+npm i
+
 npm run build
 
 # 进入构建文件夹
