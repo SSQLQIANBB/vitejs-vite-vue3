@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld'
 import ImgRaw from '/vite.svg?raw' // 文件
 import Img from '/vite.svg?url' // url
 import inline from './styles/inline.module.css?inline'; // 禁用css
@@ -71,7 +71,7 @@ let admin = {
 };
 console.log('name', admin.name)
 
-console.log(import.meta.env.VITE_BASIC_URL)
+console.log('VITE_BASIC_URL', import.meta.env.VITE_BASIC_URL)
 </script>
 
 <template>
