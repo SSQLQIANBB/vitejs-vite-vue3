@@ -1,24 +1,26 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import { resolve } from 'path';
+// import basicSsl from '@vitejs/plugin-basic-ssl';
 
-import legacy from '@vitejs/plugin-legacy'
+import legacy from '@vitejs/plugin-legacy';
 // import { splitVendorChunkPlugin } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/vitejs-vite-vue3/', // 命令行参数指定 vite build --base=/my/public/path/
   plugins: [
-    vue(), 
+    vue(),
     // splitVendorChunkPlugin(), // 代码分割
     {
       // rollup插件执行时机
       ...legacy({
-        targets: ['defaults', 'not IE 11']
+        targets: ['defaults', 'not IE 11'],
       }),
       enforce: 'pre', // vite插件之前 post: vite构建插件之后执行；默认vite插件之后执行
       apply: 'serve', // 服务模式调用 build: 生产模式调用
-    }
+    },
+    // basicSsl(), // ssl证书
   ],
   // 不在node_modules中的依赖将视为源码，打包为ESM,可调整为依赖并生成deps到node_modules
   // 配置optimizeDeps.include和build.commonjsOptions.include生成cjs到node_moodules
@@ -60,7 +62,7 @@ export default defineConfig({
       //   nested: resolve(__dirname, 'nested/index.html'),
       // },
       output: {
-        // manualChunks: 自定义分割策略 
+        // manualChunks: 自定义分割策略
         // 从 Vite 2.9 起，manualChunks 默认情况下不再被更改
       },
     },
@@ -82,7 +84,7 @@ export default defineConfig({
       {
         find: '@',
         replacement: resolve(process.cwd(), '.', 'src') + '/',
-      }
+      },
     ],
     // dedupe: ['vue'],
     // 扩展名
@@ -91,7 +93,7 @@ export default defineConfig({
   css: {
     modules: {
       scopeBehaviour: 'global',
-      localsConvention: 'camelCase'
+      localsConvention: 'camelCase',
     },
     devSourcemap: true,
   },
@@ -109,4 +111,35 @@ export default defineConfig({
   envDir: 'envConfig', // .env.*文件目录
   envPrefix: 'VITE_', // 以 envPrefix 开头的环境变量会通过 import.meta.env 暴露在你的客户端源码中。
   appType: 'spa', // 应用类型
-})
+
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    strictPort: false, // 端口占用尝试下一个可用端口
+    // https: true,
+    open: 'localhost:8080',
+    proxy: {},
+    // 开发服务器配置cors `boolean | CorsOptions`
+    cors: {
+      origin: "*",
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+      preflightContinue: false,
+      optionsSuccessStatus: 204,
+    },
+    // 指定服务器响应的 header
+    headers: {},
+    base: '/config', // ???
+    // 定义开发调试阶段生成资产的 origin
+    origin: 'localhost:8089'
+  },
+  // server: {
+    //   watch: {
+    //     ignored: ['!**/node_modules/your-package-name/**'],
+    //   },
+    // },
+    // // 被监听的包必须被排除在优化之外，
+    // // 以便它能出现在依赖关系图中并触发热更新。
+    // optimizeDeps: {
+    //   exclude: ['your-package-name'],
+    // },
+});
